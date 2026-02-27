@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O‘quv Kursi Boshqaruvi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <form id="courseForm">
+
+        <input type="text" id="name" placeholder="Ism familiya" required>
+
+        <select id="gender">
+            <option value="Erkak">Erkak</option>
+            <option value="Ayol">Ayol</option>
+        </select>
+
+        <input type="date" id="birth" required>
+
+        <select id="subject">
+            <option value="Ingliz tili">Ingliz tili</option>
+            <option value="Matematika">Matematika</option>
+            <option value="Fizika">Fizika</option>
+        </select>
+
+        <select id="time">
+            <option value="Ertalab">Ertalab</option>
+            <option value="Kechqurun">Kechqurun</option>
+        </select>
+
+        <input type="number" id="price" placeholder="Narxi" required>
+
+        <input type="text" id="phone" placeholder="Telefon raqami" required>
+
+        <button type="submit">Qo‘shish</button>
+
+    </form>
+</div>
+
+<div id="list"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
