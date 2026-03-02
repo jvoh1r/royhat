@@ -1,8 +1,11 @@
 const form = document.getElementById("courseForm");
 const list = document.getElementById("list");
 
-let editMode = false;
-let editCard = null;
+let students = JSON.parse(localStorage.getItem("students")) || [];
+let editIndex = null;
+
+// Sahifa ochilganda ma’lumotlarni chiqarish
+renderStudents();
 
 form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -15,27 +18,48 @@ form.addEventListener("submit", function (e) {
     const price = document.getElementById("price").value;
     const phone = document.getElementById("phone").value;
 
-    const text =
-        "<strong>" + name + "</strong><br>" +
-        gender + " / " + birth + " / " + subject + " / " +
-        time + " / " + price + " so'm / " + phone;
+    const student = {
+        name: name,
+        gender: gender,
+        birth: birth,
+        subject: subject,
+        time: time,
+        price: price,
+        phone: phone
+    };
 
-    if (editMode) {
-
-        editCard.querySelector(".card-info").innerHTML = text;
-
-        editMode = false;
-        editCard = null;
-        form.querySelector("button").textContent = "Qo'shish";
-
+    if (editIndex === null) {
+        students.push(student);
     } else {
+        students[editIndex] = student;
+        editIndex = null;
+        form.querySelector("button").textContent = "Qo'shish";
+    }
+
+    localStorage.setItem("students", JSON.stringify(students));
+    renderStudents();
+    form.reset();
+});
+
+function renderStudents() {
+    list.innerHTML = "";
+
+    for (let i = 0; i < students.length; i++) {
 
         const card = document.createElement("div");
         card.className = "card";
 
         const info = document.createElement("div");
         info.className = "card-info";
-        info.innerHTML = text;
+
+        info.innerHTML =
+            "<strong>" + students[i].name + "</strong><br>" +
+            students[i].gender + " / " +
+            students[i].birth + " / " +
+            students[i].subject + " / " +
+            students[i].time + " / " +
+            students[i].price + " so'm / " +
+            students[i].phone;
 
         const buttons = document.createElement("div");
         buttons.className = "card-buttons";
@@ -49,22 +73,22 @@ form.addEventListener("submit", function (e) {
         deleteBtn.className = "delete-btn";
 
         editBtn.addEventListener("click", function () {
+            document.getElementById("name").value = students[i].name;
+            document.getElementById("gender").value = students[i].gender;
+            document.getElementById("birth").value = students[i].birth;
+            document.getElementById("subject").value = students[i].subject;
+            document.getElementById("time").value = students[i].time;
+            document.getElementById("price").value = students[i].price;
+            document.getElementById("phone").value = students[i].phone;
 
-            document.getElementById("name").value = name;
-            document.getElementById("gender").value = gender;
-            document.getElementById("birth").value = birth;
-            document.getElementById("subject").value = subject;
-            document.getElementById("time").value = time;
-            document.getElementById("price").value = price;
-            document.getElementById("phone").value = phone;
-
-            editMode = true;
-            editCard = card;
+            editIndex = i;
             form.querySelector("button").textContent = "Saqlash";
         });
 
         deleteBtn.addEventListener("click", function () {
-            list.removeChild(card);
+            students.splice(i, 1);
+            localStorage.setItem("students", JSON.stringify(students));
+            renderStudents();
         });
 
         buttons.appendChild(editBtn);
@@ -75,6 +99,4 @@ form.addEventListener("submit", function (e) {
 
         list.appendChild(card);
     }
-
-    form.reset();
-});
+}
