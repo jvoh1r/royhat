@@ -4,7 +4,6 @@ const list = document.getElementById("list");
 let students = JSON.parse(localStorage.getItem("students")) || [];
 let editIndex = null;
 
-// Sahifa ochilganda ma’lumotlarni chiqarish
 renderStudents();
 
 form.addEventListener("submit", function (e) {
@@ -15,7 +14,7 @@ form.addEventListener("submit", function (e) {
     const birth = document.getElementById("birth").value;
     const subject = document.getElementById("subject").value;
     const time = document.getElementById("time").value;
-    const price = document.getElementById("price").value;
+    const days = document.getElementById("days").value;
     const phone = document.getElementById("phone").value;
 
     const student = {
@@ -24,7 +23,7 @@ form.addEventListener("submit", function (e) {
         birth: birth,
         subject: subject,
         time: time,
-        price: price,
+        days: days,
         phone: phone
     };
 
@@ -58,7 +57,7 @@ function renderStudents() {
             students[i].birth + " / " +
             students[i].subject + " / " +
             students[i].time + " / " +
-            students[i].price + " so'm / " +
+            students[i].days + " / " +
             students[i].phone;
 
         const buttons = document.createElement("div");
@@ -73,12 +72,13 @@ function renderStudents() {
         deleteBtn.className = "delete-btn";
 
         editBtn.addEventListener("click", function () {
+
             document.getElementById("name").value = students[i].name;
             document.getElementById("gender").value = students[i].gender;
             document.getElementById("birth").value = students[i].birth;
             document.getElementById("subject").value = students[i].subject;
             document.getElementById("time").value = students[i].time;
-            document.getElementById("price").value = students[i].price;
+            document.getElementById("days").value = students[i].days;
             document.getElementById("phone").value = students[i].phone;
 
             editIndex = i;
@@ -99,4 +99,4 @@ function renderStudents() {
 
         list.appendChild(card);
     }
-}
+}       
